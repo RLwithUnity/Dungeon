@@ -15,4 +15,8 @@ UserSettings/
 
 Assembly-CSharp.csproj
 
-*.meta
+Temp/
+
+results/
+
+*.onnx
