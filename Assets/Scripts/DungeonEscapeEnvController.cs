@@ -22,7 +22,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
     [System.Serializable]
     public class DragonInfo
     {
-        public DragonAgent Agent;
+        public SimpleNPC Agent;
         [HideInInspector]
         public Vector3 StartingPos;
         [HideInInspector]
@@ -120,12 +120,11 @@ public class DungeonEscapeEnvController : MonoBehaviour
         }
     }
 
-    public void PlayerTouchedHazard(PushAgentEscape agent)
+    public void TouchedHazard(PushAgentEscape agent)
     {
         m_NumberOfRemainingPlayers--;
         if (m_NumberOfRemainingPlayers == 0 || agent.IHaveAKey)
         {
-            StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.failMaterial, 0.5f));
             m_AgentGroup.EndGroupEpisode();
             ResetScene();
         }
@@ -135,25 +134,9 @@ public class DungeonEscapeEnvController : MonoBehaviour
         }
     }
 
-    public void DragonTouchedHazard(DragonAgent agent)
-    {
-        m_AgentGroup.AddGroupReward(1f);
-        m_AgentGroup.EndGroupEpisode();
-        ResetScene();
-    }
-
-    public void GetKey(PushAgentEscape agent, Collider col)
-    {
-        print("Picked up key");
-        agent.MyKey.SetActive(true);
-        agent.IHaveAKey = true;
-        m_AgentGroup.AddGroupReward(0.3f);
-        col.gameObject.SetActive(false);
-    }
-
     public void UnlockDoor()
     {
-        m_AgentGroup.AddGroupReward(0.4f);
+        m_AgentGroup.AddGroupReward(1f);
         StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.goalScoredMaterial, 0.5f));
 
         print("Unlocked Door");
@@ -161,39 +144,20 @@ public class DungeonEscapeEnvController : MonoBehaviour
 
         ResetScene();
     }
-    public void KillAgent()
-    {
-        m_AgentGroup.AddGroupReward(0.5f);
-    }
 
     public void KilledByBaddie(PushAgentEscape agent, Collision baddieCol)
     {
+        baddieCol.gameObject.SetActive(false);
         m_NumberOfRemainingPlayers--;
-        if (m_NumberOfRemainingPlayers == 0)
-        {
-            StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.failMaterial, 0.5f));
-            m_AgentGroup.EndGroupEpisode();
-            ResetScene();
-        }
-        else
-        {
-            agent.gameObject.SetActive(false);
-            print($"{baddieCol.gameObject.name} ate {agent.transform.name}");
+        agent.gameObject.SetActive(false);
+        print($"{baddieCol.gameObject.name} ate {agent.transform.name}");
 
-            //Spawn Tombstone
-            Tombstone.transform.SetPositionAndRotation(agent.transform.position, agent.transform.rotation);
-            Tombstone.SetActive(true);
-        }
-    }
-
-    public void HitByWeapon(Collider dragonCol)
-    {
-        m_AgentGroup.AddGroupReward(0.3f);
-        dragonCol.gameObject.SetActive(false);
-        print($"{dragonCol.gameObject.name} is killed by weapon");
+        //Spawn Tombstone
+        Tombstone.transform.SetPositionAndRotation(agent.transform.position, agent.transform.rotation);
+        Tombstone.SetActive(true);
 
         //Spawn the Key Pickup
-        Key.transform.SetPositionAndRotation(dragonCol.GetComponent<Collider>().transform.position, dragonCol.GetComponent<Collider>().transform.rotation);
+        Key.transform.SetPositionAndRotation(baddieCol.collider.transform.position, baddieCol.collider.transform.rotation);
         Key.SetActive(true);
     }
 
@@ -282,9 +246,13 @@ public class DungeonEscapeEnvController : MonoBehaviour
         //End Episode
         foreach (var item in DragonsList)
         {
+            if (!item.Agent)
+            {
+                return;
+            }
             item.Agent.transform.SetPositionAndRotation(item.StartingPos, item.StartingRot);
+            item.Agent.SetRandomWalkSpeed();
             item.Agent.gameObject.SetActive(true);
-            m_AgentGroup.RegisterAgent(item.Agent);
         }
     }
 }
