@@ -97,7 +97,7 @@ public class PushAgentEscape : Agent
         }
         if (col.transform.CompareTag("portal"))
         {
-            m_GameController.TouchedHazard(this);
+            m_GameController.PlayerTouchedHazard(this);
         }
     }
 
@@ -106,12 +106,15 @@ public class PushAgentEscape : Agent
         //if we find a key and it's parent is the main platform we can pick it up
         if (col.transform.CompareTag("key") && col.transform.parent == transform.parent && gameObject.activeInHierarchy)
         {
-            print("Picked up key");
-            MyKey.SetActive(true);
-            IHaveAKey = true;
-            col.gameObject.SetActive(false);
+            m_GameController.GetKey(this, col);
+        }
+
+        if (col.transform.CompareTag("dragon"))
+        {
+            m_GameController.HitByWeapon(col);
         }
     }
+
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
