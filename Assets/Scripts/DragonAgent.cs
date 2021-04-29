@@ -4,11 +4,9 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
-public class PushAgentEscape : Agent
+public class DragonAgent : Agent
 {
-
-    public GameObject MyKey; //my key gameobject. will be enabled when key picked up.
-    public bool IHaveAKey; //have i picked up a key
+    public float walkSpeed;
     private PushBlockSettings m_PushBlockSettings;
     private Rigidbody m_AgentRb;
     private DungeonEscapeEnvController m_GameController;
@@ -18,19 +16,15 @@ public class PushAgentEscape : Agent
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
-        MyKey.SetActive(false);
-        IHaveAKey = false;
     }
 
     public override void OnEpisodeBegin()
     {
-        MyKey.SetActive(false);
-        IHaveAKey = false;
+        walkSpeed = 2;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(IHaveAKey);
     }
 
     /// <summary>
@@ -80,38 +74,14 @@ public class PushAgentEscape : Agent
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.transform.CompareTag("lock"))
-        {
-            if (IHaveAKey)
-            {
-                MyKey.SetActive(false);
-                IHaveAKey = false;
-                m_GameController.UnlockDoor();
-            }
-        }
-        if (col.transform.CompareTag("dragon"))
-        {
-            m_GameController.KilledByBaddie(this, col);
-            MyKey.SetActive(false);
-            IHaveAKey = false;
-        }
         if (col.transform.CompareTag("portal"))
         {
-            m_GameController.PlayerTouchedHazard(this);
-        }
-    }
-
-    void OnTriggerEnter(Collider col)
-    {
-        //if we find a key and it's parent is the main platform we can pick it up
-        if (col.transform.CompareTag("key") && col.transform.parent == transform.parent && gameObject.activeInHierarchy)
-        {
-            m_GameController.GetKey(this, col);
+            m_GameController.DragonTouchedHazard(this);
         }
 
-        if (col.transform.CompareTag("dragon"))
+        if (col.transform.CompareTag("agent"))
         {
-            m_GameController.HitByWeapon(col);
+            m_GameController.KillAgent();
         }
     }
 
@@ -120,19 +90,19 @@ public class PushAgentEscape : Agent
     {
         var discreteActionsOut = actionsOut.DiscreteActions;
         discreteActionsOut[0] = 0;
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.L))
         {
             discreteActionsOut[0] = 3;
         }
-        else if (Input.GetKey(KeyCode.W))
+        else if (Input.GetKey(KeyCode.I))
         {
             discreteActionsOut[0] = 1;
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.J))
         {
             discreteActionsOut[0] = 4;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.K))
         {
             discreteActionsOut[0] = 2;
         }
