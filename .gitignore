@@ -20,3 +20,5 @@ Temp/
 results/
 
 *.onnx
+
+.vs/
