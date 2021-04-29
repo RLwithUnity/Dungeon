@@ -15,4 +15,6 @@ UserSettings/
 
 Assembly-CSharp.csproj
 
-*.meta
+.vs/
+
+results/
