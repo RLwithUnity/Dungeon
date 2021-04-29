@@ -15,8 +15,6 @@ UserSettings/
 
 Assembly-CSharp.csproj
 
-Temp/
+.vs/
 
 results/
-
-*.onnx
