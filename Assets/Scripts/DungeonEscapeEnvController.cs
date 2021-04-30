@@ -215,7 +215,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
             var randomPosZ = Random.Range(-areaBounds.extents.z * m_PushBlockSettings.spawnAreaMarginMultiplier,
                 areaBounds.extents.z * m_PushBlockSettings.spawnAreaMarginMultiplier);
             randomSpawnPos = ground.transform.position + new Vector3(randomPosX, 1f, randomPosZ);
-            if (Physics.CheckBox(randomSpawnPos, new Vector3(2.5f, 0.01f, 2.5f)) == false)
+            if (Physics.CheckBox(randomSpawnPos, new Vector3(3f, 0.01f, 3f)) == false)
             {
                 foundNewSpawnLocation = true;
             }
@@ -299,7 +299,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
         {
             item.Agent.transform.SetPositionAndRotation(item.StartingPos, item.StartingRot);
             item.Agent.gameObject.SetActive(true);
-            m_AgentGroup.RegisterAgent(item.Agent);
+            m_DragonGroup.RegisterAgent(item.Agent);
         }
     }
 }

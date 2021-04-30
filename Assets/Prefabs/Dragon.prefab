@@ -1111,6 +1111,7 @@ GameObject:
   - component: {fileID: 7371367613557678465}
   - component: {fileID: 3218865052566903911}
   - component: {fileID: 1703668305100300346}
+  - component: {fileID: 7561403021698097004}
   m_Layer: 0
   m_Name: Dragon
   m_TagString: dragon
@@ -1264,6 +1265,20 @@ MonoBehaviour:
   onCollisionExitEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7561403021698097004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7371367613557678468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &7371367613911430010
 GameObject:
   m_ObjectHideFlags: 0

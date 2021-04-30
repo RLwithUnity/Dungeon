@@ -190,42 +190,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &380559429 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1947817820235474989, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
-  m_PrefabInstance: {fileID: 722043125}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78c960fbbc7844c269d4d14ae68abfc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &600395266 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5077650082126629015, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
-  m_PrefabInstance: {fileID: 722043125}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &600395268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600395266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DecisionPeriod: 5
-  TakeActionsBetweenDecisions: 1
 --- !u!114 &600395272 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1813751615727739601, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
   m_PrefabInstance: {fileID: 722043125}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 600395266}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4f9cda814639e04fab53232f481f844, type: 3}
@@ -245,14 +215,14 @@ PrefabInstance:
     - target: {fileID: 905364970355815796, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 8db55d8d238a93e4fa91dd7da4f8318b, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: a8fb71c6baea2b941ad85d9abd0fa4eb, type: 3}
     - target: {fileID: 905364970355815796, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorName
       value: Dragon
       objectReference: {fileID: 0}
     - target: {fileID: 905364970355815796, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 905364970355815796, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_InferenceDevice
@@ -261,14 +231,14 @@ PrefabInstance:
     - target: {fileID: 1917226959654427030, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 23eb3b89213464649b8b888eb2b5ddf5, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 8e109ead71e140141aab09fb70ed8d60, type: 3}
     - target: {fileID: 1917226959654427030, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorName
       value: SpearMan
       objectReference: {fileID: 0}
     - target: {fileID: 1917226959654427030, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1917226959654427030, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_InferenceDevice
@@ -276,7 +246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1946577846877886252, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2508780962454810567, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_Name
@@ -284,7 +254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2508780962454810585, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: AgentsList.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2508780962454810585, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: DragonsList.Array.data[0].T
@@ -293,7 +263,7 @@ PrefabInstance:
     - target: {fileID: 2508780962454810585, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: AgentsList.Array.data[1].Agent
       value: 
-      objectReference: {fileID: 380559429}
+      objectReference: {fileID: 722043126}
     - target: {fileID: 2508780962454810585, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: DragonsList.Array.data[0].Agent
       value: 
@@ -346,9 +316,36 @@ PrefabInstance:
       propertyPath: tagToDetect
       value: portal
       objectReference: {fileID: 0}
+    - target: {fileID: 6201056245137834215, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 8e109ead71e140141aab09fb70ed8d60, type: 3}
+    - target: {fileID: 6201056245137834215, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_BehaviorName
+      value: SpearMan
+      objectReference: {fileID: 0}
+    - target: {fileID: 6201056245137834215, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6201056245137834215, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5077650082126629013, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+--- !u!114 &722043126 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6313415502633251164, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+  m_PrefabInstance: {fileID: 722043125}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c960fbbc7844c269d4d14ae68abfc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &942623749
 GameObject:
   m_ObjectHideFlags: 0
