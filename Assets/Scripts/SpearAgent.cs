@@ -3,34 +3,76 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
-/*
-public class PushAgentEscape : Agent
+
+public class SpearAgent : Agent, IEntity
 {
 
     public GameObject MyKey; //my key gameobject. will be enabled when key picked up.
     public bool IHaveAKey; //have i picked up a key
+    public GameObject Spear;
+    private GameObject StabOn;
     private PushBlockSettings m_PushBlockSettings;
     private Rigidbody m_AgentRb;
     private DungeonEscapeEnvController m_GameController;
+    
+    public int stabCoolTime = 100;
+    public int health = 50;
 
     public override void Initialize()
     {
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
-        MyKey.SetActive(false);
-        IHaveAKey = false;
+        StabOn = Spear.transform.GetChild(7).gameObject;
     }
 
     public override void OnEpisodeBegin()
     {
         MyKey.SetActive(false);
-        IHaveAKey = false;
+        StabOn.SetActive(false);
+        health = 50;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(IHaveAKey);
+        sensor.AddObservation(stabCoolTime == 0);
+    }
+
+    public void agentAction()
+    {
+        if (stabCoolTime == 0)
+        {
+            Debug.Log("Stab!");
+            // 창내리기
+            Spear.transform.localPosition = new Vector3(0.7f, -0.15f, 0.9f);
+            Spear.transform.localRotation = Quaternion.Euler(90f, 0, 0);
+
+            Vector3 StepBack = this.transform.forward * -2f;
+            m_AgentRb.AddForce(StepBack * m_PushBlockSettings.agentRunSpeed, ForceMode.VelocityChange);
+
+            Invoke("Stab", 0.5f); // 0.5초 딜레이 후 Stab 메서드 실행
+        }
+    }
+
+    public void Stab()
+    {
+        Vector3 stab = this.transform.forward * 4f;
+        m_AgentRb.AddForce(stab * m_PushBlockSettings.agentRunSpeed, ForceMode.VelocityChange);
+
+        stabCoolTime = 100;
+        StabOn.SetActive(false);
+        Invoke("SpearUp", 1);
+    }
+
+    public void SpearUp()
+    {
+        Spear.transform.localPosition = new Vector3(0.7f, 0.5f, 0.3f);
+        Spear.transform.localRotation = Quaternion.Euler(30f, 0, 0);
+    }
+
+    public void onDamage()
+    {
+        health -= 1;
     }
 
     /// <summary>
@@ -38,6 +80,12 @@ public class PushAgentEscape : Agent
     /// </summary>
     public void MoveAgent(ActionSegment<int> act)
     {
+        stabCoolTime = stabCoolTime <= 0 ? 0 : stabCoolTime-1;
+        if (stabCoolTime==0)
+        {
+            StabOn.SetActive(true);
+        }
+        // Debug.Log(stabCoolTime);
         var dirToGo = Vector3.zero;
         var rotateDir = Vector3.zero;
 
@@ -63,6 +111,9 @@ public class PushAgentEscape : Agent
             case 6:
                 dirToGo = transform.right * 0.75f;
                 break;
+            case 7:
+                agentAction();
+                break;
         }
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
         m_AgentRb.AddForce(dirToGo * m_PushBlockSettings.agentRunSpeed,
@@ -80,6 +131,7 @@ public class PushAgentEscape : Agent
 
     void OnCollisionEnter(Collision col)
     {
+        
         if (col.transform.CompareTag("lock"))
         {
             if (IHaveAKey)
@@ -89,15 +141,25 @@ public class PushAgentEscape : Agent
                 m_GameController.UnlockDoor();
             }
         }
-        if (col.transform.CompareTag("dragon"))
-        {
-            //m_GameController.KilledByBaddie(this, col);
-            MyKey.SetActive(false);
-            IHaveAKey = false;
-        }
+        /*
         if (col.transform.CompareTag("portal"))
         {
             m_GameController.PlayerTouchedHazard(this);
+        }
+        */
+    }
+
+    void OnCollisionStay(Collision col)
+    {
+        if (col.transform.CompareTag("dragon"))
+        {
+            Debug.Log(health);
+            onDamage();
+            if (health <= 0)
+            {
+                m_GameController.EndGroupEpisode();
+                m_GameController.KilledByBaddie(this);
+            }
         }
     }
 
@@ -108,7 +170,6 @@ public class PushAgentEscape : Agent
         {
             m_GameController.GetKey(this, col);
         }
-
         if (col.transform.CompareTag("dragon"))
         {
             m_GameController.HitByWeapon(col);
@@ -136,6 +197,9 @@ public class PushAgentEscape : Agent
         {
             discreteActionsOut[0] = 2;
         }
+        else if (Input.GetKey(KeyCode.E))
+        {
+            discreteActionsOut[0] = 7;
+        }
     }
 }
-*/

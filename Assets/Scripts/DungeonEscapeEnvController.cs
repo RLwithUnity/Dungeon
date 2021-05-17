@@ -8,7 +8,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
     [System.Serializable]
     public class PlayerInfo
     {
-        public PushAgentEscape Agent;
+        public SpearAgent Agent;
         [HideInInspector]
         public Vector3 StartingPos;
         [HideInInspector]
@@ -31,7 +31,6 @@ public class DungeonEscapeEnvController : MonoBehaviour
         public Rigidbody Rb;
         [HideInInspector]
         public Collider Col;
-        public Transform T;
         public bool IsDead;
     }
 
@@ -61,7 +60,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
 
     public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
     public List<DragonInfo> DragonsList = new List<DragonInfo>();
-    private Dictionary<PushAgentEscape, PlayerInfo> m_PlayerDict = new Dictionary<PushAgentEscape, PlayerInfo>();
+    private Dictionary<SpearAgent, PlayerInfo> m_PlayerDict = new Dictionary<SpearAgent, PlayerInfo>();
     public bool UseRandomAgentRotation = true;
     public bool UseRandomAgentPosition = true;
     PushBlockSettings m_PushBlockSettings;
@@ -104,7 +103,6 @@ public class DungeonEscapeEnvController : MonoBehaviour
         {
             item.StartingPos = item.Agent.transform.position;
             item.StartingRot = item.Agent.transform.rotation;
-            item.T = item.Agent.transform;
             item.Col = item.Agent.GetComponent<Collider>();
             m_DragonGroup.RegisterAgent(item.Agent);
         }
@@ -122,7 +120,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
             ResetScene();
         }
     }
-
+    /*
     public void PlayerTouchedHazard(PushAgentEscape agent)
     {
         m_NumberOfRemainingPlayers--;
@@ -137,6 +135,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
             agent.gameObject.SetActive(false);
         }
     }
+    */
 
     public void DragonTouchedHazard(DragonAgent agent)
     {
@@ -145,7 +144,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
         ResetScene();
     }
 
-    public void GetKey(PushAgentEscape agent, Collider col)
+    public void GetKey(SpearAgent agent, Collider col)
     {
         print("Picked up key");
         agent.MyKey.SetActive(true);
@@ -169,7 +168,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
         m_DragonGroup.AddGroupReward(0.5f);
     }
 
-    public void KilledByBaddie(PushAgentEscape agent, Collision baddieCol)
+    public void KilledByBaddie(SpearAgent agent)
     {
         m_NumberOfRemainingPlayers--;
         if (m_NumberOfRemainingPlayers == 0)
@@ -181,7 +180,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
         else
         {
             agent.gameObject.SetActive(false);
-            print($"{baddieCol.gameObject.name} ate {agent.transform.name}");
+            // print($"{baddieCol.gameObject.name} ate {agent.transform.name}");
 
             //Spawn Tombstone
             Tombstone.transform.SetPositionAndRotation(agent.transform.position, agent.transform.rotation);
