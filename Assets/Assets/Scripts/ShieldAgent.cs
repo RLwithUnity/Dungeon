@@ -13,8 +13,8 @@ public class ShieldAgent : Agent, IEntity
     public PushBlockSettings m_PushBlockSettings;
     public Rigidbody m_AgentRb;
     public DungeonEscapeEnvController m_GameController;
-
     public int health = 50;
+    public bool IsShieldUP; // have i lift a shield
 
     public override void Initialize()
     {
@@ -23,6 +23,7 @@ public class ShieldAgent : Agent, IEntity
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
         MyKey.SetActive(false);
         IHaveAKey = false;
+        IsShieldUP = false;
     }
 
     public override void OnEpisodeBegin()
@@ -35,6 +36,8 @@ public class ShieldAgent : Agent, IEntity
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(IHaveAKey);
+        sensor.AddObservation(health);
+        sensor.AddObservation(IsShieldUP);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -58,14 +61,14 @@ public class ShieldAgent : Agent, IEntity
         {
             Debug.Log(health);
             onDamage();
-            //m_GameController.KilledByBaddie(this, col);
+            if (health == 0 )
+            {
+                //m_GameController.KilledByBaddie(this, col);
+            }
             MyKey.SetActive(false);
             IHaveAKey = false;
         }
-        // if (col.transform.CompareTag("portal"))
-        // {
-        //     m_GameController.TouchedHazard(this);
-        // }
+
     }
 
     void OnTriggerEnter(Collider col)
@@ -82,22 +85,28 @@ public class ShieldAgent : Agent, IEntity
 
     public void agentAction()
     {
-        if (Shield.transform.localPosition.y > 0.2)
+        if (IsShieldUP)
         {
             Debug.Log("shield Down");
+            IsShieldUP = false;
             Shield.transform.localPosition = new Vector3(0f, 0.0f, 0.723f);
+            m_PushBlockSettings.agentRunSpeed = 3; // default 3
+            m_PushBlockSettings.agentRotationSpeed = 15; // default 15
         }
         else
         {
             Debug.Log("shield Up");
+            IsShieldUP = true;
             Shield.transform.localPosition = new Vector3(0f, 0.3f, 0.723f);
+            m_PushBlockSettings.agentRunSpeed = 1.5f; // default 3
+            m_PushBlockSettings.agentRotationSpeed = 10; // default 15
         }
     }
 
     public void onDamage()
     {
         Debug.Log("Shield Agent damaged");
-        health -= 1;
+        health -= 1;    
     }
 
     public void MoveAgent(ActionSegment<int> act)
@@ -127,12 +136,13 @@ public class ShieldAgent : Agent, IEntity
             case 6:
                 dirToGo = transform.right * 0.75f;
                 break;
-            case 7:
+            case 7: // shield action
                 agentAction();
                 break;
         }
 
-        transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
+        //transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f); //original code
+        transform.Rotate(rotateDir, m_PushBlockSettings.agentRotationSpeed * Time.fixedDeltaTime * 200/15f);
         m_AgentRb.AddForce(dirToGo * m_PushBlockSettings.agentRunSpeed,
             ForceMode.VelocityChange);
     }
@@ -159,6 +169,7 @@ public class ShieldAgent : Agent, IEntity
         }
         else if (Input.GetKey(KeyCode.E))
         {
+            // shield action
             discreteActionsOut[0] = 7;
         }
     }
