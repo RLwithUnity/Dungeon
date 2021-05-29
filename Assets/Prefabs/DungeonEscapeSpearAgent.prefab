@@ -131,7 +131,6 @@ MonoBehaviour:
   - dragon
   - key
   - lock
-  - portal
   m_RaysPerDirection: 7
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 0.05
@@ -715,7 +714,6 @@ GameObject:
   - component: {fileID: 3089473632274692360}
   - component: {fileID: 7561797193587202869}
   - component: {fileID: 229769071729712573}
-  - component: {fileID: 5302314348346031870}
   m_Layer: 0
   m_Name: DungeonEscapeSpearAgent
   m_TagString: agent
@@ -817,9 +815,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  MyKey: {fileID: 6532531525713663910}
-  IHaveAKey: 0
-  StabOn: {fileID: 1496259374458686282}
+  Spear: {fileID: 0}
   stabCoolTime: 100
   health: 50
 --- !u!65 &7561797193587202869
@@ -848,30 +844,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugCommandLineOverride: 
---- !u!114 &5302314348346031870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7502892531019869945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df0f8be9a37d6486498061e2cbc4cd94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RootBody: {fileID: 7554836709434038083}
-  VirtualRoot: {fileID: 7502892531019869945}
-  Settings:
-    UseModelSpaceTranslations: 0
-    UseModelSpaceRotations: 0
-    UseLocalSpaceTranslations: 1
-    UseLocalSpaceRotations: 1
-    UseModelSpaceLinearVelocity: 1
-    UseLocalSpaceLinearVelocity: 0
-    UseJointPositionsAndAngles: 0
-    UseJointForces: 0
-  sensorName: RBSensor
 --- !u!1 &7502956164626312439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1184,11 +1156,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa3273f7e41624f43904a3b3f2bba0c4, type: 3}
---- !u!1 &1496259374458686282 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2795811591070525230, guid: aa3273f7e41624f43904a3b3f2bba0c4, type: 3}
-  m_PrefabInstance: {fileID: 3607225167049714788}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6171973105264763493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7469273839882128897, guid: aa3273f7e41624f43904a3b3f2bba0c4, type: 3}

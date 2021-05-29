@@ -4,88 +4,72 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
-public class SpearAgent : Agent, IEntity
+public class MagicianAgent: Agent
 {
 
+    public GameObject healParticles;
     // public GameObject MyKey; //my key gameobject. will be enabled when key picked up.
-    // public bool IHaveAKey; //have i picked up a key
-    public GameObject Spear;
-    private GameObject StabOn;
+    //public bool IHaveAKey; //have i picked up a key
     private PushBlockSettings m_PushBlockSettings;
     private Rigidbody m_AgentRb;
     private DungeonEscapeEnvController m_GameController;
-    
-    public int stabCoolTime = 100;
-    public int health = 50;
+
+    public int health;
 
     public override void Initialize()
     {
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
-        StabOn = Spear.transform.GetChild(7).gameObject;
+        // MyKey.SetActive(false);
+        healParticles.SetActive(false);
+        // IHaveAKey = false;
+        health = 50;
     }
 
     public override void OnEpisodeBegin()
     {
-        // MyKey.SetActive(false);
-        StabOn.SetActive(false);
-        health = 50;
+        //MyKey.SetActive(false);
+        //IHaveAKey = false;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(stabCoolTime == 0);
+        // sensor.AddObservation(IHaveAKey);
     }
 
-    public void agentAction()
-    {
-        if (stabCoolTime == 0)
-        {
-            Debug.Log("Stab!");
-            // 창내리기
-            Spear.transform.localPosition = new Vector3(0.7f, -0.15f, 0.9f);
-            Spear.transform.localRotation = Quaternion.Euler(90f, 0, 0);
-
-            Vector3 StepBack = this.transform.forward * -2f;
-            m_AgentRb.AddForce(StepBack * m_PushBlockSettings.agentRunSpeed, ForceMode.VelocityChange);
-
-            Invoke("Stab", 0.5f); // 0.5초 딜레이 후 Stab 메서드 실행
+    void Heal(int value) {
+        StartCoroutine(HealEffect());
+        health += value;
+        if (health > 100) {
+            health = 100;
         }
     }
 
-    public void Stab()
-    {
-        Vector3 stab = this.transform.forward * 4f;
-        m_AgentRb.AddForce(stab * m_PushBlockSettings.agentRunSpeed, ForceMode.VelocityChange);
-
-        stabCoolTime = 100;
-        StabOn.SetActive(false);
-        Invoke("SpearUp", 1);
+    private IEnumerator HealEffect() {
+        healParticles.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        healParticles.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        healParticles.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        healParticles.SetActive(false);
     }
-
-    public void SpearUp()
-    {
-        Spear.transform.localPosition = new Vector3(0.7f, 0.5f, 0.3f);
-        Spear.transform.localRotation = Quaternion.Euler(30f, 0, 0);
+    
+    void CheckForHeal() {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
+        foreach(Collider c in colliders) {
+            if (c.GetComponent<Agent>()) {
+                //c.GetComponent<Agent>().Heal(5);
+            }
+        }
     }
-
-    public void onDamage()
-    {
-        health -= 1;
-    }
-
+    
     /// <summary>
     /// Moves the agent according to the selected action.
     /// </summary>
     public void MoveAgent(ActionSegment<int> act)
     {
-        stabCoolTime = stabCoolTime <= 0 ? 0 : stabCoolTime-1;
-        if (stabCoolTime==0)
-        {
-            StabOn.SetActive(true);
-        }
-        // Debug.Log(stabCoolTime);
         var dirToGo = Vector3.zero;
         var rotateDir = Vector3.zero;
 
@@ -111,9 +95,6 @@ public class SpearAgent : Agent, IEntity
             case 6:
                 dirToGo = transform.right * 0.75f;
                 break;
-            case 7:
-                agentAction();
-                break;
         }
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
         m_AgentRb.AddForce(dirToGo * m_PushBlockSettings.agentRunSpeed,
@@ -131,7 +112,6 @@ public class SpearAgent : Agent, IEntity
 
     void OnCollisionEnter(Collision col)
     {
-        
         if (col.transform.CompareTag("lock"))
         {
             /*
@@ -143,26 +123,6 @@ public class SpearAgent : Agent, IEntity
             }
             */
         }
-        /*
-        if (col.transform.CompareTag("portal"))
-        {
-            m_GameController.PlayerTouchedHazard(this);
-        }
-        */
-    }
-
-    void OnCollisionStay(Collision col)
-    {
-        if (col.transform.CompareTag("dragon"))
-        {
-            Debug.Log(health);
-            onDamage();
-            if (health <= 0)
-            {
-                m_GameController.EndGroupEpisode();
-                m_GameController.KilledByBaddie(this);
-            }
-        }
     }
 
     void OnTriggerEnter(Collider col)
@@ -170,38 +130,40 @@ public class SpearAgent : Agent, IEntity
         //if we find a key and it's parent is the main platform we can pick it up
         if (col.transform.CompareTag("key") && col.transform.parent == transform.parent && gameObject.activeInHierarchy)
         {
-            m_GameController.GetKey(this, col);
-        }
-        if (col.transform.CompareTag("dragon"))
-        {
-            m_GameController.HitByWeapon(col);
+            print("Picked up key");
+            // MyKey.SetActive(true);
+            // IHaveAKey = true;
+            col.gameObject.SetActive(false);
         }
     }
-
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var discreteActionsOut = actionsOut.DiscreteActions;
         discreteActionsOut[0] = 0;
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.L))
         {
             discreteActionsOut[0] = 3;
         }
-        else if (Input.GetKey(KeyCode.W))
+        else if (Input.GetKey(KeyCode.I))
         {
             discreteActionsOut[0] = 1;
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.J))
         {
             discreteActionsOut[0] = 4;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.K))
         {
             discreteActionsOut[0] = 2;
         }
-        else if (Input.GetKey(KeyCode.E))
+        else if (Input.GetKey(KeyCode.O))
         {
-            discreteActionsOut[0] = 7;
+            CheckForHeal();
+        }
+        else if (Input.GetKey(KeyCode.P))
+        {
+            health -= 5;
         }
     }
 }

@@ -145,7 +145,6 @@ MonoBehaviour:
   - dragon
   - key
   - lock
-  - portal
   m_RaysPerDirection: 7
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 0.05
@@ -512,10 +511,10 @@ GameObject:
   - component: {fileID: 4617914533249063958}
   - component: {fileID: 4673049729411930794}
   - component: {fileID: 4723951872554078892}
+  - component: {fileID: 8192075841788977399}
   - component: {fileID: 4680027771345262300}
   - component: {fileID: 3112664423947489364}
-  - component: {fileID: 7032283694831235863}
-  - component: {fileID: 8572502675019580831}
+  - component: {fileID: -1930254372878443337}
   m_Layer: 0
   m_Name: DungeonEscapeShieldAgent
   m_TagString: agent
@@ -574,19 +573,41 @@ MonoBehaviour:
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 07000000
-    VectorActionSize: 07000000
+      BranchSizes: 08000000
+    VectorActionSize: 08000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 11400000, guid: b56a13a0e996e4f719001b218cb87d5a, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
-  m_BehaviorName: ShieldMan
+  m_BehaviorType: 1
+  m_BehaviorName: ShieldAgent
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
+--- !u!114 &8192075841788977399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4620001679929910032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cecc97b842be0d04fa3bdb8517dbc23f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  Shield: {fileID: 7815546020167502967}
+  m_PushBlockSettings: {fileID: 0}
+  m_AgentRb: {fileID: 0}
+  m_GameController: {fileID: 0}
+  health: 50
+  IsShieldUP: 0
 --- !u!65 &4680027771345262300
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -613,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugCommandLineOverride: 
---- !u!114 &7032283694831235863
+--- !u!114 &-1930254372878443337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -622,37 +643,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4620001679929910032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df0f8be9a37d6486498061e2cbc4cd94, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RootBody: {fileID: 4673049729411930794}
-  VirtualRoot: {fileID: 4620001679929910032}
-  Settings:
-    UseModelSpaceTranslations: 0
-    UseModelSpaceRotations: 0
-    UseLocalSpaceTranslations: 1
-    UseLocalSpaceRotations: 1
-    UseModelSpaceLinearVelocity: 1
-    UseLocalSpaceLinearVelocity: 0
-    UseJointPositionsAndAngles: 0
-    UseJointForces: 0
-  sensorName: RBSensor
---- !u!114 &8572502675019580831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4620001679929910032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88b6042bc9a5d4aa58d931eae49442e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &4620113691559338270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,6 +1269,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc0a27abe179fcc41a1657dcdbb737df, type: 3}
+--- !u!1 &7815546020167502967 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7526121941577856002, guid: bc0a27abe179fcc41a1657dcdbb737df, type: 3}
+  m_PrefabInstance: {fileID: 289441718020356213}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &483197835694912853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 193905930463415584, guid: bc0a27abe179fcc41a1657dcdbb737df, type: 3}

@@ -6,9 +6,37 @@ using UnityEngine;
 public class DungeonEscapeEnvController : MonoBehaviour
 {
     [System.Serializable]
-    public class PlayerInfo
+    public class AgentInfo
     {
-        public SpearAgent Agent;
+        public Agent Agent;
+        [HideInInspector]
+        public Vector3 StartingPos;
+        [HideInInspector]
+        public Quaternion StartingRot;
+        [HideInInspector]
+        public Rigidbody Rb;
+        [HideInInspector]
+        public Collider Col;
+    }
+
+    [System.Serializable]
+    public class ShieldInfo
+    {
+        public ShieldAgent Agent;
+        [HideInInspector]
+        public Vector3 StartingPos;
+        [HideInInspector]
+        public Quaternion StartingRot;
+        [HideInInspector]
+        public Rigidbody Rb;
+        [HideInInspector]
+        public Collider Col;
+    }
+
+    [System.Serializable]
+    public class MagicianInfo
+    {
+        public MagicianAgent Agent;
         [HideInInspector]
         public Vector3 StartingPos;
         [HideInInspector]
@@ -58,9 +86,17 @@ public class DungeonEscapeEnvController : MonoBehaviour
     /// </summary>
     Renderer m_GroundRenderer;
 
-    public List<PlayerInfo> AgentsList = new List<PlayerInfo>();
+    public List<AgentInfo> AgentsList = new List<AgentInfo>();
+    // public List<ShieldInfo> ShieldAgentsList = new List<ShieldInfo>();
+    // public List<MagicianInfo> MagicianAgentsList = new List<MagicianInfo>();
+
     public List<DragonInfo> DragonsList = new List<DragonInfo>();
-    private Dictionary<SpearAgent, PlayerInfo> m_PlayerDict = new Dictionary<SpearAgent, PlayerInfo>();
+    
+    // private Dictionary<SpearAgent, SpearInfo> m_SpearPlayerDict = new Dictionary<SpearAgent, SpearInfo>();
+    // private Dictionary<ShieldAgent, ShieldInfo> m_ShieldPlayerDict = new Dictionary<ShieldAgent, ShieldInfo>();
+    // private Dictionary<MagicianAgent, MagicianInfo> m_PlayerDict = new Dictionary<MagicianAgent, MagicianInfo>();
+
+
     public bool UseRandomAgentRotation = true;
     public bool UseRandomAgentPosition = true;
     PushBlockSettings m_PushBlockSettings;
@@ -82,7 +118,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
 
         //Reset Players Remaining
-        m_NumberOfRemainingPlayers = AgentsList.Count;
+        //m_NumberOfRemainingPlayers = AgentsList.Count;
 
         //Hide The Key
         Key.SetActive(false);
@@ -90,6 +126,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
         // Initialize TeamManager
         m_AgentGroup = new SimpleMultiAgentGroup();
         m_DragonGroup = new SimpleMultiAgentGroup();
+
         foreach (var item in AgentsList)
         {
             item.StartingPos = item.Agent.transform.position;
@@ -99,6 +136,30 @@ public class DungeonEscapeEnvController : MonoBehaviour
             // Add to team manager
             m_AgentGroup.RegisterAgent(item.Agent);
         }
+        /*
+        foreach (var item in ShieldAgentsList)
+        {
+            item.StartingPos = item.Agent.transform.position;
+            item.StartingRot = item.Agent.transform.rotation;
+            item.Rb = item.Agent.GetComponent<Rigidbody>();
+            item.Col = item.Agent.GetComponent<Collider>();
+            // Add to team manager
+            m_AgentGroup.RegisterAgent(item.Agent);
+        }
+
+        foreach (var item in MagicianAgentsList)
+        {
+            item.StartingPos = item.Agent.transform.position;
+            item.StartingRot = item.Agent.transform.rotation;
+            item.Rb = item.Agent.GetComponent<Rigidbody>();
+            item.Col = item.Agent.GetComponent<Collider>();
+            // Add to team manager
+            m_AgentGroup.RegisterAgent(item.Agent);
+        }
+        */
+
+
+
         foreach (var item in DragonsList)
         {
             item.StartingPos = item.Agent.transform.position;
@@ -147,8 +208,8 @@ public class DungeonEscapeEnvController : MonoBehaviour
     public void GetKey(SpearAgent agent, Collider col)
     {
         print("Picked up key");
-        agent.MyKey.SetActive(true);
-        agent.IHaveAKey = true;
+        //agent.MyKey.SetActive(true);
+        //agent.IHaveAKey = true;
         m_AgentGroup.AddGroupReward(0.3f);
         col.gameObject.SetActive(false);
     }
@@ -281,8 +342,8 @@ public class DungeonEscapeEnvController : MonoBehaviour
             item.Agent.transform.SetPositionAndRotation(pos, rot);
             item.Rb.velocity = Vector3.zero;
             item.Rb.angularVelocity = Vector3.zero;
-            item.Agent.MyKey.SetActive(false);
-            item.Agent.IHaveAKey = false;
+            // item.Agent.MyKey.SetActive(false);
+            // item.Agent.IHaveAKey = false;
             item.Agent.gameObject.SetActive(true);
             m_AgentGroup.RegisterAgent(item.Agent);
         }
