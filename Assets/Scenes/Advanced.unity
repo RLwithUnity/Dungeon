@@ -199,7 +199,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 860524686803326265, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorName
-      value: Agent1
+      value: agent
       objectReference: {fileID: 0}
     - target: {fileID: 860524686803326265, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorType
@@ -221,6 +221,18 @@ PrefabInstance:
       propertyPath: StabOn
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2418207601633093537, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: mg
+      value: 
+      objectReference: {fileID: 1384033732}
+    - target: {fileID: 2418207601633093537, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: sh
+      value: 
+      objectReference: {fileID: 2036440607}
+    - target: {fileID: 2418207601633093537, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: sp
+      value: 
+      objectReference: {fileID: 1825729130}
     - target: {fileID: 2508780962454810567, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_Name
       value: DungeonEscapePlatform
@@ -283,7 +295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3701726201195060877, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorName
-      value: Agent2
+      value: agent
       objectReference: {fileID: 0}
     - target: {fileID: 3701726201195060877, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorType
@@ -314,6 +326,18 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5232552181766730612, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: mg
+      value: 
+      objectReference: {fileID: 1384033732}
+    - target: {fileID: 5232552181766730612, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: sh
+      value: 
+      objectReference: {fileID: 2036440607}
+    - target: {fileID: 5232552181766730612, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: sp
+      value: 
+      objectReference: {fileID: 1825729130}
+    - target: {fileID: 5232552181766730612, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: MyKey
       value: 
       objectReference: {fileID: 1586765700}
@@ -323,7 +347,7 @@ PrefabInstance:
       objectReference: {fileID: 1959750985}
     - target: {fileID: 6088909006148047444, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorName
-      value: Agent3
+      value: agent
       objectReference: {fileID: 0}
     - target: {fileID: 6088909006148047444, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorType
@@ -333,6 +357,18 @@ PrefabInstance:
       propertyPath: m_InferenceDevice
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7259493477713780751, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: mg
+      value: 
+      objectReference: {fileID: 1384033732}
+    - target: {fileID: 7259493477713780751, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: sh
+      value: 
+      objectReference: {fileID: 2036440607}
+    - target: {fileID: 7259493477713780751, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: sp
+      value: 
+      objectReference: {fileID: 1825729130}
     - target: {fileID: 7857488553303735244, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_Intensity
       value: 2
@@ -442,6 +478,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
+--- !u!114 &1825729130 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5232552181766730612, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+  m_PrefabInstance: {fileID: 722043125}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f96c1c3fd20d944799f026230cb3c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1959750985 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8556283364560650550, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}

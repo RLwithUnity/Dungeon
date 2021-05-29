@@ -46,14 +46,6 @@ public class MagicianAgent: Agent
         sensor.AddObservation(mg.health);
     }
 
-    void Heal(int value) {
-        StartCoroutine(HealEffect());
-        health += value;
-        if (health > 100) {
-            health = 100;
-        }
-    }
-
     private IEnumerator HealEffect() {
         healParticles.SetActive(true);
         yield return new WaitForSeconds(1f);
@@ -68,7 +60,7 @@ public class MagicianAgent: Agent
             if (c.GetComponent<SpearAgent>()) {
                 StartCoroutine(HealEffect());
                 SpearAgent Agent = c.GetComponent<SpearAgent>();
-                Agent.health += 1;
+                Agent.health = Agent.health > 50 ? 50 : Agent.health + 1;
                 Debug.Log(Agent.health);
             }
 
@@ -76,7 +68,7 @@ public class MagicianAgent: Agent
             {
                 StartCoroutine(HealEffect());
                 ShieldAgent Agent = c.GetComponent<ShieldAgent>();
-                Agent.health += 1;
+                Agent.health = Agent.health > 50 ? 50 : Agent.health + 1;
                 Debug.Log(Agent.health);
             }
         }
