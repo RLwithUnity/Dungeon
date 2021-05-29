@@ -20,34 +20,6 @@ public class DungeonEscapeEnvController : MonoBehaviour
     }
 
     [System.Serializable]
-    public class ShieldInfo
-    {
-        public ShieldAgent Agent;
-        [HideInInspector]
-        public Vector3 StartingPos;
-        [HideInInspector]
-        public Quaternion StartingRot;
-        [HideInInspector]
-        public Rigidbody Rb;
-        [HideInInspector]
-        public Collider Col;
-    }
-
-    [System.Serializable]
-    public class MagicianInfo
-    {
-        public MagicianAgent Agent;
-        [HideInInspector]
-        public Vector3 StartingPos;
-        [HideInInspector]
-        public Quaternion StartingRot;
-        [HideInInspector]
-        public Rigidbody Rb;
-        [HideInInspector]
-        public Collider Col;
-    }
-
-    [System.Serializable]
     public class DragonInfo
     {
         public DragonAgent Agent;
@@ -87,15 +59,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
     Renderer m_GroundRenderer;
 
     public List<AgentInfo> AgentsList = new List<AgentInfo>();
-    // public List<ShieldInfo> ShieldAgentsList = new List<ShieldInfo>();
-    // public List<MagicianInfo> MagicianAgentsList = new List<MagicianInfo>();
-
     public List<DragonInfo> DragonsList = new List<DragonInfo>();
-    
-    // private Dictionary<SpearAgent, SpearInfo> m_SpearPlayerDict = new Dictionary<SpearAgent, SpearInfo>();
-    // private Dictionary<ShieldAgent, ShieldInfo> m_ShieldPlayerDict = new Dictionary<ShieldAgent, ShieldInfo>();
-    // private Dictionary<MagicianAgent, MagicianInfo> m_PlayerDict = new Dictionary<MagicianAgent, MagicianInfo>();
-
 
     public bool UseRandomAgentRotation = true;
     public bool UseRandomAgentPosition = true;

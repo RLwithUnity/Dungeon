@@ -956,7 +956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 3
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -968,7 +968,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 1
   m_BehaviorType: 1
-  m_BehaviorName: My Behavior
+  m_BehaviorName: agent
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -989,7 +989,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  tombstone: {fileID: 0}
   healParticles: {fileID: 201786449405516009, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
   health: 50
 --- !u!114 &7294259183725823245

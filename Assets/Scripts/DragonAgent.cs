@@ -20,6 +20,11 @@ public class DragonAgent : Agent
         health = 100;
     }
 
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        sensor.AddObservation(health);
+    }
+
     public void onDamage()
     {
         Debug.Log(health);

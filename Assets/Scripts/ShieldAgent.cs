@@ -14,16 +14,23 @@ public class ShieldAgent : Agent, IEntity
     public Rigidbody m_AgentRb;
     public DungeonEscapeEnvController m_GameController;
     public int health = 50;
-    public bool IsShieldUP; // have i lift a shield
+    public bool IsShieldUP; // have i lift a shield.
+
+    public SpearAgent sp;
+    public ShieldAgent sh;
+    public MagicianAgent mg;
 
     public override void Initialize()
     {
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
+
         //MyKey.SetActive(false);
         //IHaveAKey = false;
         IsShieldUP = false;
+
+
     }
 
     public override void OnEpisodeBegin()
@@ -36,8 +43,11 @@ public class ShieldAgent : Agent, IEntity
     public override void CollectObservations(VectorSensor sensor)
     {
         // sensor.AddObservation(IHaveAKey);
-        sensor.AddObservation(health);
         sensor.AddObservation(IsShieldUP);
+        
+        sensor.AddObservation(sp.health);
+        sensor.AddObservation(sh.health);
+        sensor.AddObservation(mg.health);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)

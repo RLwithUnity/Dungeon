@@ -127,10 +127,10 @@ MonoBehaviour:
   m_SensorName: RayPerceptionSensor
   m_DetectableTags:
   - wall
-  - agent
   - dragon
-  - key
-  - lock
+  - spearAgent
+  - shieldAgent
+  - magicianAgent
   m_RaysPerDirection: 7
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 0.05
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 4
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -780,7 +780,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 1
   m_BehaviorType: 0
-  m_BehaviorName: SpearMan
+  m_BehaviorName: agent
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -815,7 +815,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  tombstone: {fileID: 0}
   Spear: {fileID: 5545479776232257768}
   stabCoolTime: 100
   health: 50

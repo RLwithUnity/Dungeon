@@ -15,6 +15,10 @@ public class MagicianAgent: Agent
 
     public int health;
 
+    public SpearAgent sp;
+    public ShieldAgent sh;
+    public MagicianAgent mg;
+
     public override void Initialize()
     {
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
@@ -24,17 +28,22 @@ public class MagicianAgent: Agent
         healParticles.SetActive(false);
         // IHaveAKey = false;
         health = 50;
+
     }
 
     public override void OnEpisodeBegin()
     {
         //MyKey.SetActive(false);
         //IHaveAKey = false;
+
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // sensor.AddObservation(IHaveAKey);
+        sensor.AddObservation(0);
+        sensor.AddObservation(sp.health);
+        sensor.AddObservation(sh.health);
+        sensor.AddObservation(mg.health);
     }
 
     void Heal(int value) {
@@ -52,7 +61,8 @@ public class MagicianAgent: Agent
     }
     
     void CheckForHeal() {
-        
+
+        Debug.Log("Heal!");
         Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
         foreach(Collider c in colliders) {
             if (c.GetComponent<SpearAgent>()) {
@@ -109,6 +119,9 @@ public class MagicianAgent: Agent
                 break;
             case 6:
                 dirToGo = transform.right * 0.75f;
+                break;
+            case 7:
+                CheckForHeal();
                 break;
         }
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);

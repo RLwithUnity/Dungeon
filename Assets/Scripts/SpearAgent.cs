@@ -17,12 +17,17 @@ public class SpearAgent : Agent, IEntity
     public int stabCoolTime = 100;
     public int health = 50;
 
+    public SpearAgent sp;
+    public ShieldAgent sh;
+    public MagicianAgent mg;
+
     public override void Initialize()
     {
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
         StabOn = Spear.transform.GetChild(7).gameObject;
+
     }
 
     public override void OnEpisodeBegin()
@@ -30,11 +35,15 @@ public class SpearAgent : Agent, IEntity
         // MyKey.SetActive(false);
         StabOn.SetActive(false);
         health = 50;
+
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(stabCoolTime == 0);
+        sensor.AddObservation(sp.health);
+        sensor.AddObservation(sh.health);
+        sensor.AddObservation(mg.health);
     }
 
     public void agentAction()

@@ -85,6 +85,7 @@ MonoBehaviour:
     IsDead: 0
   UseRandomAgentRotation: 1
   UseRandomAgentPosition: 1
+  m_NumberOfRemainingPlayers: 0
   Key: {fileID: 8779779321292819045}
   Tombstone: {fileID: 2955884926463556730, guid: f7ce359ff922c6e49bf9b3696beb0cf9, type: 3}
 --- !u!1 &2510174829506741297
@@ -858,8 +859,20 @@ PrefabInstance:
       value: DungeonEscapeShieldAgent
       objectReference: {fileID: 0}
     - target: {fileID: 4723951872554078892, guid: c501cfc297b04794e94fad506bd948fe, type: 3}
+      propertyPath: m_BehaviorName
+      value: agent
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723951872554078892, guid: c501cfc297b04794e94fad506bd948fe, type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723951872554078892, guid: c501cfc297b04794e94fad506bd948fe, type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4723951872554078892, guid: c501cfc297b04794e94fad506bd948fe, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7032283694831235863, guid: c501cfc297b04794e94fad506bd948fe, type: 3}
@@ -905,15 +918,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3218865052566903911, guid: 083f2be73b119f646ad44bef47708d93, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3218865052566903911, guid: 083f2be73b119f646ad44bef47708d93, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3218865052566903911, guid: 083f2be73b119f646ad44bef47708d93, type: 3}
       propertyPath: m_BrainParameters.NumStackedVectorObservations
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3218865052566903911, guid: 083f2be73b119f646ad44bef47708d93, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3218865052566903911, guid: 083f2be73b119f646ad44bef47708d93, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7371367613557678468, guid: 083f2be73b119f646ad44bef47708d93, type: 3}
       propertyPath: m_Name
@@ -1260,12 +1281,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7671517892611065075, guid: 4359c7b3dd4e76d41805786eeaa129f9, type: 3}
+      propertyPath: m_BehaviorName
+      value: agent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671517892611065075, guid: 4359c7b3dd4e76d41805786eeaa129f9, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7671517892611065075, guid: 4359c7b3dd4e76d41805786eeaa129f9, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 0
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671517892611065075, guid: 4359c7b3dd4e76d41805786eeaa129f9, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671517892611065075, guid: 4359c7b3dd4e76d41805786eeaa129f9, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8693824966717832671, guid: 4359c7b3dd4e76d41805786eeaa129f9, type: 3}
       propertyPath: healParticles
@@ -1423,6 +1456,26 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6153718690252969042, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
+      propertyPath: m_DetectableTags.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153718690252969042, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
+      propertyPath: m_DetectableTags.Array.data[1]
+      value: dragon
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153718690252969042, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
+      propertyPath: m_DetectableTags.Array.data[2]
+      value: spearAgent
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153718690252969042, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
+      propertyPath: m_DetectableTags.Array.data[3]
+      value: shieldAgent
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153718690252969042, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
+      propertyPath: m_DetectableTags.Array.data[4]
+      value: magicianAgent
+      objectReference: {fileID: 0}
     - target: {fileID: 6300554414039930402, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1484,8 +1537,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7605721320500780869, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
+      propertyPath: m_BehaviorName
+      value: agent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605721320500780869, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605721320500780869, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605721320500780869, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5302314348346031870, guid: 4776233a903cc654cb9cbbae79ee3416, type: 3}

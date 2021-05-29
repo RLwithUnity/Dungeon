@@ -220,16 +220,14 @@ MonoBehaviour:
   m_SensorName: RayPerceptionSensor
   m_DetectableTags:
   - wall
-  - agent
   - dragon
-  - key
-  - lock
-  - portal
-  - weapon
-  m_RaysPerDirection: 10
-  m_MaxRayDegrees: 180
-  m_SphereCastRadius: 0.3
-  m_RayLength: 50
+  - spearAgent
+  - shieldAgent
+  - magicianAgent
+  m_RaysPerDirection: 7
+  m_MaxRayDegrees: 60
+  m_SphereCastRadius: 0.05
+  m_RayLength: 40
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 1

@@ -198,8 +198,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 860524686803326265, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_BehaviorName
+      value: Agent1
+      objectReference: {fileID: 0}
+    - target: {fileID: 860524686803326265, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 860524686803326265, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
@@ -211,7 +215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 905364970355815796, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1636783005793580351, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: StabOn
@@ -277,6 +281,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3701726201195060877, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_BehaviorName
+      value: Agent2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3701726201195060877, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3701726201195060877, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_BrainParameters.VectorObservationSize
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4024671382622152729, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.77
@@ -305,6 +321,18 @@ PrefabInstance:
       propertyPath: StabOn
       value: 
       objectReference: {fileID: 1959750985}
+    - target: {fileID: 6088909006148047444, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_BehaviorName
+      value: Agent3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088909006148047444, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088909006148047444, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7857488553303735244, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_Intensity
       value: 2
