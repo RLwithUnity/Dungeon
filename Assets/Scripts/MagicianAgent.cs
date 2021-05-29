@@ -6,7 +6,6 @@ using Unity.MLAgents.Actuators;
 
 public class MagicianAgent: Agent
 {
-
     public GameObject healParticles;
     // public GameObject MyKey; //my key gameobject. will be enabled when key picked up.
     //public bool IHaveAKey; //have i picked up a key
@@ -50,21 +49,37 @@ public class MagicianAgent: Agent
         healParticles.SetActive(true);
         yield return new WaitForSeconds(1f);
         healParticles.SetActive(false);
-        yield return new WaitForSeconds(1f);
-        healParticles.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        healParticles.SetActive(false);
     }
     
     void CheckForHeal() {
+        
         Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
         foreach(Collider c in colliders) {
-            if (c.GetComponent<Agent>()) {
-                //c.GetComponent<Agent>().Heal(5);
+            if (c.GetComponent<SpearAgent>()) {
+                StartCoroutine(HealEffect());
+                SpearAgent Agent = c.GetComponent<SpearAgent>();
+                Agent.health += 1;
+                Debug.Log(Agent.health);
+            }
+
+            else if (c.GetComponent<ShieldAgent>())
+            {
+                StartCoroutine(HealEffect());
+                ShieldAgent Agent = c.GetComponent<ShieldAgent>();
+                Agent.health += 1;
+                Debug.Log(Agent.health);
             }
         }
     }
-    
+    public void onDamage()
+    {
+        health -= 1;
+        if (health <= 0)
+        {
+            m_GameController.KilledByBaddie(this);
+        }
+    }
+
     /// <summary>
     /// Moves the agent according to the selected action.
     /// </summary>
@@ -110,8 +125,18 @@ public class MagicianAgent: Agent
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
+    void OnCollisionStay(Collision col)
+    {
+        if (col.transform.CompareTag("dragon"))
+        {
+            Debug.Log(health);
+            onDamage();
+        }
+    }
+
     void OnCollisionEnter(Collision col)
     {
+
         if (col.transform.CompareTag("lock"))
         {
             /*
@@ -122,6 +147,7 @@ public class MagicianAgent: Agent
                 m_GameController.UnlockDoor();
             }
             */
+
         }
     }
 

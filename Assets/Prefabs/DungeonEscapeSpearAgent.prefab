@@ -716,7 +716,7 @@ GameObject:
   - component: {fileID: 229769071729712573}
   m_Layer: 0
   m_Name: DungeonEscapeSpearAgent
-  m_TagString: agent
+  m_TagString: spearAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -815,7 +815,8 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  Spear: {fileID: 0}
+  tombstone: {fileID: 0}
+  Spear: {fileID: 5545479776232257768}
   stabCoolTime: 100
   health: 50
 --- !u!65 &7561797193587202869
@@ -1159,5 +1160,10 @@ PrefabInstance:
 --- !u!4 &6171973105264763493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7469273839882128897, guid: aa3273f7e41624f43904a3b3f2bba0c4, type: 3}
+  m_PrefabInstance: {fileID: 3607225167049714788}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5545479776232257768 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9149889840177173644, guid: aa3273f7e41624f43904a3b3f2bba0c4, type: 3}
   m_PrefabInstance: {fileID: 3607225167049714788}
   m_PrefabAsset: {fileID: 0}

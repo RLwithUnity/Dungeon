@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: -1930254372878443337}
   m_Layer: 0
   m_Name: DungeonEscapeShieldAgent
-  m_TagString: agent
+  m_TagString: shieldAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -602,6 +602,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  tombstone: {fileID: 0}
   Shield: {fileID: 7815546020167502967}
   m_PushBlockSettings: {fileID: 0}
   m_AgentRb: {fileID: 0}

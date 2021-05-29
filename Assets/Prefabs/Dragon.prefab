@@ -1107,11 +1107,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7371367613557678471}
   - component: {fileID: 7371367613557678464}
-  - component: {fileID: 4111937568855460802}
+  - component: {fileID: 7698183427313306147}
   - component: {fileID: 7371367613557678465}
   - component: {fileID: 3218865052566903911}
   - component: {fileID: 1703668305100300346}
-  - component: {fileID: 7561403021698097004}
+  - component: {fileID: 5880550880827134790}
   m_Layer: 0
   m_Name: Dragon
   m_TagString: dragon
@@ -1162,7 +1162,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &4111937568855460802
+--- !u!114 &7698183427313306147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1171,14 +1171,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7371367613557678468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4f9cda814639e04fab53232f481f844, type: 3}
+  m_Script: {fileID: 11500000, guid: 440f20be41fda914298654aa98678ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  walkSpeed: 0
+  m_AgentRb: {fileID: 7371367613557678464}
+  health: 0
+  projectile: {fileID: 2413487145614114057, guid: 4f478799fea6e8045a4ca90544e91a75, type: 3}
+  projectileSpeed: 10
 --- !u!65 &7371367613557678465
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1265,7 +1268,7 @@ MonoBehaviour:
   onCollisionExitEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7561403021698097004
+--- !u!114 &5880550880827134790
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

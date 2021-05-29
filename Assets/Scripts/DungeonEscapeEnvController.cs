@@ -101,7 +101,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
     public bool UseRandomAgentPosition = true;
     PushBlockSettings m_PushBlockSettings;
 
-    private int m_NumberOfRemainingPlayers;
+    public int m_NumberOfRemainingPlayers;
     public GameObject Key;
     public GameObject Tombstone;
     private SimpleMultiAgentGroup m_AgentGroup;
@@ -198,13 +198,6 @@ public class DungeonEscapeEnvController : MonoBehaviour
     }
     */
 
-    public void DragonTouchedHazard(DragonAgent agent)
-    {
-        m_DragonGroup.AddGroupReward(1f);
-        EndGroupEpisode();
-        ResetScene();
-    }
-
     public void GetKey(SpearAgent agent, Collider col)
     {
         print("Picked up key");
@@ -214,29 +207,18 @@ public class DungeonEscapeEnvController : MonoBehaviour
         col.gameObject.SetActive(false);
     }
 
-    public void UnlockDoor()
-    {
-        m_AgentGroup.AddGroupReward(0.4f);
-        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.goalScoredMaterial, 0.5f));
-
-        print("Unlocked Door");
-        EndGroupEpisode();
-
-        ResetScene();
-    }
     public void KillAgent()
     {
         m_DragonGroup.AddGroupReward(0.5f);
     }
 
-    public void KilledByBaddie(SpearAgent agent)
+    public void KilledByBaddie(Agent agent)
     {
         m_NumberOfRemainingPlayers--;
+        Debug.Log(m_NumberOfRemainingPlayers);
         if (m_NumberOfRemainingPlayers == 0)
         {
-            StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.failMaterial, 0.5f));
-            EndGroupEpisode();
-            ResetScene();
+            EndGroupEpisodeDragon();
         }
         else
         {
@@ -244,20 +226,23 @@ public class DungeonEscapeEnvController : MonoBehaviour
             // print($"{baddieCol.gameObject.name} ate {agent.transform.name}");
 
             //Spawn Tombstone
-            Tombstone.transform.SetPositionAndRotation(agent.transform.position, agent.transform.rotation);
-            Tombstone.SetActive(true);
+            //Tombstone.transform.SetPositionAndRotation(agent.transform.position, agent.transform.rotation);
+            //Tombstone.SetActive(true);
         }
     }
 
     public void HitByWeapon(Collider dragonCol)
     {
         m_AgentGroup.AddGroupReward(0.3f);
-        dragonCol.gameObject.SetActive(false);
-        print($"{dragonCol.gameObject.name} is killed by weapon");
+        m_DragonGroup.AddGroupReward(-0.3f);
+        dragonCol.GetComponent<DragonAgent>().onDamage();
+
+        // dragonCol.gameObject.SetActive(false);
+
 
         //Spawn the Key Pickup
-        Key.transform.SetPositionAndRotation(dragonCol.GetComponent<Collider>().transform.position, dragonCol.GetComponent<Collider>().transform.rotation);
-        Key.SetActive(true);
+        // Key.transform.SetPositionAndRotation(dragonCol.GetComponent<Collider>().transform.position, dragonCol.GetComponent<Collider>().transform.rotation);
+        // Key.SetActive(true);
     }
 
     /// <summary>
@@ -293,19 +278,20 @@ public class DungeonEscapeEnvController : MonoBehaviour
         m_GroundRenderer.material = m_GroundMaterial;
     }
 
-    public void BaddieTouchedBlock()
-    {
-        EndGroupEpisode();
-
-        // Swap ground material for a bit to indicate we scored.
-        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.failMaterial, 0.5f));
-        ResetScene();
-    }
-
-    public void EndGroupEpisode()
+    public void EndGroupEpisodeAgent()
     {
         m_AgentGroup.EndGroupEpisode();
         m_DragonGroup.EndGroupEpisode();
+        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.goalScoredMaterial, 0.5f));
+        ResetScene();
+    }
+
+    public void EndGroupEpisodeDragon()
+    {
+        m_AgentGroup.EndGroupEpisode();
+        m_DragonGroup.EndGroupEpisode();
+        StartCoroutine(GoalScoredSwapGroundMaterial(m_PushBlockSettings.failMaterial, 0.5f));
+        ResetScene();
     }
 
     public void GroupEpisodeInterrupted()
@@ -327,6 +313,7 @@ public class DungeonEscapeEnvController : MonoBehaviour
 
         //Reset Players Remaining
         m_NumberOfRemainingPlayers = AgentsList.Count;
+        //m_NumberOfRemainingPlayers = 3;
 
         //Random platform rot
         var rotation = Random.Range(0, 4);
@@ -357,7 +344,10 @@ public class DungeonEscapeEnvController : MonoBehaviour
         //End Episode
         foreach (var item in DragonsList)
         {
-            item.Agent.transform.SetPositionAndRotation(item.StartingPos, item.StartingRot);
+            var pos = UseRandomAgentPosition ? GetRandomSpawnPos() : item.StartingPos;
+            var rot = UseRandomAgentRotation ? GetRandomRot() : item.StartingRot;
+
+            item.Agent.transform.SetPositionAndRotation(pos, rot);
             item.Agent.gameObject.SetActive(true);
             m_DragonGroup.RegisterAgent(item.Agent);
         }

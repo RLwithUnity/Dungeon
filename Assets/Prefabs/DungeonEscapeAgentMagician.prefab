@@ -741,6 +741,7 @@ Transform:
   - {fileID: 9188820016250372227}
   - {fileID: 8384179757005598374}
   - {fileID: 3296023860312307983}
+  - {fileID: 3002467619821667115}
   m_Father: {fileID: 4830954159424380931}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -890,7 +891,7 @@ GameObject:
   - component: {fileID: 7294259183725823245}
   m_Layer: 0
   m_Name: DungeonEscapeAgentMagician
-  m_TagString: agent
+  m_TagString: magicianAgent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -988,6 +989,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  tombstone: {fileID: 0}
   healParticles: {fileID: 201786449405516009, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
   health: 50
 --- !u!114 &7294259183725823245
@@ -1522,4 +1524,66 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8772105788424992950, guid: 136a5606958a37f4f8649d4075ad3554, type: 3}
   m_PrefabInstance: {fileID: 2471342234349221829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4694759041228049548
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4833553929194791147}
+    m_Modifications:
+    - target: {fileID: 201786449405516009, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_Name
+      value: HealEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+--- !u!4 &3002467619821667115 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7533899978224619431, guid: c5c35d991eaf9ee49a0544fb911e7784, type: 3}
+  m_PrefabInstance: {fileID: 4694759041228049548}
   m_PrefabAsset: {fileID: 0}

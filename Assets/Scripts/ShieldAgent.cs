@@ -45,32 +45,13 @@ public class ShieldAgent : Agent, IEntity
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnCollisionStay(Collision col)
     {
-        // 방패일때는 피 안딸도록...
-        if (col.transform.CompareTag("lock"))
-        {
-            /*
-            if (IHaveAKey)
-            {
-                MyKey.SetActive(false);
-                IHaveAKey = false;
-                m_GameController.UnlockDoor();
-            }
-            */
-        }
         if (col.transform.CompareTag("dragon"))
         {
             Debug.Log(health);
             onDamage();
-            if (health == 0 )
-            {
-                //m_GameController.KilledByBaddie(this, col);
-            }
-            //MyKey.SetActive(false);
-            //IHaveAKey = false;
         }
-
     }
 
     void OnTriggerEnter(Collider col)
@@ -107,8 +88,16 @@ public class ShieldAgent : Agent, IEntity
 
     public void onDamage()
     {
-        Debug.Log("Shield Agent damaged");
-        health -= 1;    
+        if (!IsShieldUP)
+        {
+            Debug.Log("Shield Agent damaged");
+            health -= 1;
+            
+            if (health <= 0)
+            {
+                m_GameController.KilledByBaddie(this);
+            }
+        }
     }
 
     public void MoveAgent(ActionSegment<int> act)

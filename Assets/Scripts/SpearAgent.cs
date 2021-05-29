@@ -6,7 +6,6 @@ using Unity.MLAgents.Actuators;
 
 public class SpearAgent : Agent, IEntity
 {
-
     // public GameObject MyKey; //my key gameobject. will be enabled when key picked up.
     // public bool IHaveAKey; //have i picked up a key
     public GameObject Spear;
@@ -47,7 +46,7 @@ public class SpearAgent : Agent, IEntity
             Spear.transform.localPosition = new Vector3(0.7f, -0.15f, 0.9f);
             Spear.transform.localRotation = Quaternion.Euler(90f, 0, 0);
 
-            Vector3 StepBack = this.transform.forward * -2f;
+            Vector3 StepBack = this.transform.forward * -1f;
             m_AgentRb.AddForce(StepBack * m_PushBlockSettings.agentRunSpeed, ForceMode.VelocityChange);
 
             Invoke("Stab", 0.5f); // 0.5초 딜레이 후 Stab 메서드 실행
@@ -56,7 +55,7 @@ public class SpearAgent : Agent, IEntity
 
     public void Stab()
     {
-        Vector3 stab = this.transform.forward * 4f;
+        Vector3 stab = this.transform.forward * 2f;
         m_AgentRb.AddForce(stab * m_PushBlockSettings.agentRunSpeed, ForceMode.VelocityChange);
 
         stabCoolTime = 100;
@@ -73,6 +72,10 @@ public class SpearAgent : Agent, IEntity
     public void onDamage()
     {
         health -= 1;
+        if (health <= 0)
+        {
+            m_GameController.KilledByBaddie(this);
+        }
     }
 
     /// <summary>
@@ -155,23 +158,17 @@ public class SpearAgent : Agent, IEntity
     {
         if (col.transform.CompareTag("dragon"))
         {
-            Debug.Log(health);
             onDamage();
-            if (health <= 0)
-            {
-                m_GameController.EndGroupEpisode();
-                m_GameController.KilledByBaddie(this);
-            }
         }
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnTriggerStay(Collider col)
     {
         //if we find a key and it's parent is the main platform we can pick it up
-        if (col.transform.CompareTag("key") && col.transform.parent == transform.parent && gameObject.activeInHierarchy)
-        {
-            m_GameController.GetKey(this, col);
-        }
+        //if (col.transform.CompareTag("key") && col.transform.parent == transform.parent && gameObject.activeInHierarchy)
+        //{
+        //    m_GameController.GetKey(this, col);
+        //}
         if (col.transform.CompareTag("dragon"))
         {
             m_GameController.HitByWeapon(col);

@@ -6,30 +6,34 @@ using Unity.MLAgents.Actuators;
 
 public class DragonAgent : Agent
 {
-    public float walkSpeed;
-    private PushBlockSettings m_PushBlockSettings;
-    private Rigidbody m_AgentRb;
+    public Rigidbody m_AgentRb;
+    public float health;
+    public GameObject projectile;
+    public float projectileSpeed= 1;
     private DungeonEscapeEnvController m_GameController;
 
+    // Start is called before the first frame update
     public override void Initialize()
     {
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
-        m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
+        health = 100;
     }
 
+    public void onDamage()
+    {
+        Debug.Log(health);
+        health -= 1;
+        if (health <= 0)
+        {
+            m_GameController.EndGroupEpisodeAgent();
+        }
+    }
     public override void OnEpisodeBegin()
     {
-        walkSpeed = 2;
+        health = 100;
     }
 
-    public override void CollectObservations(VectorSensor sensor)
-    {
-    }
-
-    /// <summary>
-    /// Moves the agent according to the selected action.
-    /// </summary>
     public void MoveAgent(ActionSegment<int> act)
     {
         var dirToGo = Vector3.zero;
@@ -57,54 +61,55 @@ public class DragonAgent : Agent
             case 6:
                 dirToGo = transform.right * 0.75f;
                 break;
+            case 7:
+                //Transform new_transform = new GameObject().GetComponent<Transform>();
+                //new_transform.forward = 2 * transform.forward;
+                GameObject fireball = Instantiate(projectile, transform) as GameObject;
+                fireball.transform.parent = GameObject.FindWithTag("area").transform;
+                Rigidbody rb = fireball.GetComponent<Rigidbody>();
+                rb.AddForce(transform.forward * projectileSpeed, ForceMode.VelocityChange);
+                break;
         }
         transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f);
-        m_AgentRb.AddForce(dirToGo * m_PushBlockSettings.agentRunSpeed,
+        m_AgentRb.AddForce(dirToGo,
             ForceMode.VelocityChange);
     }
 
-    /// <summary>
-    /// Called every step of the engine. Here the agent takes an action.
-    /// </summary>
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         // Move the agent using the action.
         MoveAgent(actionBuffers.DiscreteActions);
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.transform.CompareTag("portal"))
-        {
-            m_GameController.DragonTouchedHazard(this);
-        }
-
-        if (col.transform.CompareTag("agent"))
-        {
-            m_GameController.KillAgent();
-        }
-    }
-
-
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var discreteActionsOut = actionsOut.DiscreteActions;
         discreteActionsOut[0] = 0;
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetKey(KeyCode.Z))
         {
             discreteActionsOut[0] = 3;
         }
-        else if (Input.GetKey(KeyCode.I))
+        else if (Input.GetKey(KeyCode.X))
         {
             discreteActionsOut[0] = 1;
         }
-        else if (Input.GetKey(KeyCode.J))
+        else if (Input.GetKey(KeyCode.C))
         {
             discreteActionsOut[0] = 4;
         }
-        else if (Input.GetKey(KeyCode.K))
+        else if (Input.GetKey(KeyCode.V))
         {
             discreteActionsOut[0] = 2;
         }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            discreteActionsOut[0] = 7;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
