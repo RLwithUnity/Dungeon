@@ -22,3 +22,5 @@ results/
 *.onnx
 
 .vs/
+
+.vscode/
