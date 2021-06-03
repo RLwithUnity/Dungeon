@@ -7,12 +7,13 @@ using Unity.MLAgents.Actuators;
 
 public class ShieldAgent : Agent, IEntity
 {
-    // public GameObject MyKey; //my key gameobject. will be enabled when key picked up.
-    // public bool IHaveAKey; //have i picked up a key
     public GameObject Shield;
-    public PushBlockSettings m_PushBlockSettings;
-    public Rigidbody m_AgentRb;
-    public DungeonEscapeEnvController m_GameController;
+    private GameObject SkillOn;
+    private PushBlockSettings m_PushBlockSettings;
+    private Rigidbody m_AgentRb;
+    private DungeonEscapeEnvController m_GameController;
+    private float SlowDown;
+
     public int health = 50;
     public bool IsShieldUP; // have i lift a shield.
 
@@ -25,26 +26,20 @@ public class ShieldAgent : Agent, IEntity
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
-
-        //MyKey.SetActive(false);
-        //IHaveAKey = false;
-        IsShieldUP = false;
-
-
+        SkillOn = Shield.transform.GetChild(5).gameObject;
+        SlowDown = 1f;
     }
 
     public override void OnEpisodeBegin()
     {
-        //MyKey.SetActive(false);
-        //IHaveAKey = false;
         health = 50;
+        IsShieldUP = false;
+        SkillOn.SetActive(IsShieldUP);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // sensor.AddObservation(IHaveAKey);
         sensor.AddObservation(IsShieldUP);
-        
         sensor.AddObservation(sp.health);
         sensor.AddObservation(sh.health);
         sensor.AddObservation(mg.health);
@@ -59,53 +54,46 @@ public class ShieldAgent : Agent, IEntity
     {
         if (col.transform.CompareTag("dragon"))
         {
-            Debug.Log(health);
-            onDamage();
+            // Debug.Log(health);
+            onDamage(1);
         }
     }
 
     void OnTriggerEnter(Collider col)
     {
-        //if we find a key and it's parent is the main platform we can pick it up
-        if (col.transform.CompareTag("key") && col.transform.parent == transform.parent && gameObject.activeInHierarchy)
-        {
-            print("Picked up key");
-            //MyKey.SetActive(true);
-            //IHaveAKey = true;
-            col.gameObject.SetActive(false);
-        }
     }
 
     public void agentAction()
     {
         if (IsShieldUP)
         {
-            Debug.Log("shield Down");
+            //Debug.Log("shield Down");
             IsShieldUP = false;
+            SkillOn.SetActive(IsShieldUP);
             Shield.transform.localPosition = new Vector3(0f, 0.0f, 0.723f);
-            m_PushBlockSettings.agentRunSpeed = 3; // default 3
-            m_PushBlockSettings.agentRotationSpeed = 15; // default 15
+            SlowDown = 1f;
         }
         else
         {
-            Debug.Log("shield Up");
+            //Debug.Log("shield Up");
             IsShieldUP = true;
+            SkillOn.SetActive(IsShieldUP);
             Shield.transform.localPosition = new Vector3(0f, 0.3f, 0.723f);
-            m_PushBlockSettings.agentRunSpeed = 1.5f; // default 3
-            m_PushBlockSettings.agentRotationSpeed = 10; // default 15
+            SlowDown = 0.5f;
         }
     }
 
-    public void onDamage()
+    public void onDamage(int damage)
     {
         if (!IsShieldUP)
         {
-            Debug.Log("Shield Agent damaged");
-            health -= 1;
-            
+            //Debug.Log("Shield Agent damaged");
+            health -= damage;
+            m_GameController.HitbyDragon();
+
             if (health <= 0)
             {
-                m_GameController.KilledByBaddie(this);
+                m_GameController.KilledByDragon(this);
             }
         }
     }
@@ -142,9 +130,8 @@ public class ShieldAgent : Agent, IEntity
                 break;
         }
 
-        //transform.Rotate(rotateDir, Time.fixedDeltaTime * 200f); //original code
-        transform.Rotate(rotateDir, m_PushBlockSettings.agentRotationSpeed * Time.fixedDeltaTime * 200/15f);
-        m_AgentRb.AddForce(dirToGo * m_PushBlockSettings.agentRunSpeed,
+        transform.Rotate(rotateDir, Time.fixedDeltaTime * 200 * SlowDown);
+        m_AgentRb.AddForce(dirToGo * m_PushBlockSettings.agentRunSpeed * SlowDown,
             ForceMode.VelocityChange);
     }
 
