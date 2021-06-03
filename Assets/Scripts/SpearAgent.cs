@@ -6,10 +6,8 @@ using Unity.MLAgents.Actuators;
 
 public class SpearAgent : Agent, IEntity
 {
-    // public GameObject MyKey; //my key gameobject. will be enabled when key picked up.
-    // public bool IHaveAKey; //have i picked up a key
     public GameObject Spear;
-    private GameObject StabOn;
+    private GameObject SkillOn;
     private PushBlockSettings m_PushBlockSettings;
     private Rigidbody m_AgentRb;
     private DungeonEscapeEnvController m_GameController;
@@ -26,16 +24,15 @@ public class SpearAgent : Agent, IEntity
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
-        StabOn = Spear.transform.GetChild(7).gameObject;
+        SkillOn = Spear.transform.GetChild(7).gameObject;
 
     }
 
     public override void OnEpisodeBegin()
     {
-        // MyKey.SetActive(false);
-        StabOn.SetActive(false);
+        SkillOn.SetActive(false);
         health = 50;
-
+        stabCoolTime = 100;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -50,7 +47,7 @@ public class SpearAgent : Agent, IEntity
     {
         if (stabCoolTime == 0)
         {
-            Debug.Log("Stab!");
+            //Debug.Log("Stab!");
             // 창내리기
             Spear.transform.localPosition = new Vector3(0.7f, -0.15f, 0.9f);
             Spear.transform.localRotation = Quaternion.Euler(90f, 0, 0);
@@ -68,7 +65,7 @@ public class SpearAgent : Agent, IEntity
         m_AgentRb.AddForce(stab * m_PushBlockSettings.agentRunSpeed, ForceMode.VelocityChange);
 
         stabCoolTime = 100;
-        StabOn.SetActive(false);
+        SkillOn.SetActive(false);
         Invoke("SpearUp", 1);
     }
 
@@ -78,12 +75,13 @@ public class SpearAgent : Agent, IEntity
         Spear.transform.localRotation = Quaternion.Euler(30f, 0, 0);
     }
 
-    public void onDamage()
+    public void onDamage(int damage)
     {
-        health -= 1;
+        health -= damage;
+        m_GameController.HitbyDragon();
         if (health <= 0)
         {
-            m_GameController.KilledByBaddie(this);
+            m_GameController.KilledByDragon(this);
         }
     }
 
@@ -95,7 +93,7 @@ public class SpearAgent : Agent, IEntity
         stabCoolTime = stabCoolTime <= 0 ? 0 : stabCoolTime-1;
         if (stabCoolTime==0)
         {
-            StabOn.SetActive(true);
+            SkillOn.SetActive(true);
         }
         // Debug.Log(stabCoolTime);
         var dirToGo = Vector3.zero;
@@ -143,41 +141,18 @@ public class SpearAgent : Agent, IEntity
 
     void OnCollisionEnter(Collision col)
     {
-        
-        if (col.transform.CompareTag("lock"))
-        {
-            /*
-            if (IHaveAKey)
-            {
-                MyKey.SetActive(false);
-                IHaveAKey = false;
-                m_GameController.UnlockDoor();
-            }
-            */
-        }
-        /*
-        if (col.transform.CompareTag("portal"))
-        {
-            m_GameController.PlayerTouchedHazard(this);
-        }
-        */
     }
 
     void OnCollisionStay(Collision col)
     {
         if (col.transform.CompareTag("dragon"))
         {
-            onDamage();
+            onDamage(1);
         }
     }
 
     void OnTriggerStay(Collider col)
     {
-        //if we find a key and it's parent is the main platform we can pick it up
-        //if (col.transform.CompareTag("key") && col.transform.parent == transform.parent && gameObject.activeInHierarchy)
-        //{
-        //    m_GameController.GetKey(this, col);
-        //}
         if (col.transform.CompareTag("dragon"))
         {
             m_GameController.HitByWeapon(col);

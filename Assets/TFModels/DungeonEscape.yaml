@@ -22,7 +22,7 @@ behaviors:
     keep_checkpoints: 5
     max_steps: 20000000
     time_horizon: 64
-    summary_freq: 3000
+    summary_freq: 50000
     threaded: true
 
   #Agent2:
@@ -100,5 +100,5 @@ behaviors:
     keep_checkpoints: 5
     max_steps: 20000000
     time_horizon: 64
-    summary_freq: 3000
+    summary_freq: 50000
     threaded: true

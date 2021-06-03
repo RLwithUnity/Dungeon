@@ -7,6 +7,6 @@ namespace Unity.MLAgents
     public interface IEntity
     {
         void agentAction();
-        void onDamage();
+        void onDamage(int damage);
     }
 }

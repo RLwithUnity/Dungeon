@@ -4,12 +4,13 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
+
 public class DragonAgent : Agent
 {
     public Rigidbody m_AgentRb;
     public float health;
     public GameObject projectile;
-    public float projectileSpeed= 1;
+    public float projectileSpeed = 1;
     private DungeonEscapeEnvController m_GameController;
 
     // Start is called before the first frame update
@@ -27,7 +28,7 @@ public class DragonAgent : Agent
 
     public void onDamage()
     {
-        Debug.Log(health);
+        //Debug.Log(health);
         health -= 1;
         if (health <= 0)
         {
@@ -67,8 +68,6 @@ public class DragonAgent : Agent
                 dirToGo = transform.right * 0.75f;
                 break;
             case 7:
-                //Transform new_transform = new GameObject().GetComponent<Transform>();
-                //new_transform.forward = 2 * transform.forward;
                 GameObject fireball = Instantiate(projectile, transform) as GameObject;
                 fireball.transform.parent = GameObject.FindWithTag("area").transform;
                 Rigidbody rb = fireball.GetComponent<Rigidbody>();

@@ -340,7 +340,7 @@ PrefabInstance:
     - target: {fileID: 5232552181766730612, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: MyKey
       value: 
-      objectReference: {fileID: 1586765700}
+      objectReference: {fileID: 0}
     - target: {fileID: 5232552181766730612, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: StabOn
       value: 
@@ -351,7 +351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6088909006148047444, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_BehaviorType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6088909006148047444, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
       propertyPath: m_InferenceDevice
@@ -390,11 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a17ad25c78ed8c54b8be7a8b471477fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1586765700 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4095451384474344922, guid: 5878a6d7527854d0a84b133c7c6efe55, type: 3}
-  m_PrefabInstance: {fileID: 722043125}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1631081637
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +441,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 50.8
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

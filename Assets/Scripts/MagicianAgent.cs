@@ -6,14 +6,15 @@ using Unity.MLAgents.Actuators;
 
 public class MagicianAgent: Agent
 {
+    public GameObject Wand;
+    private GameObject SkillOn;
     public GameObject healParticles;
-    // public GameObject MyKey; //my key gameobject. will be enabled when key picked up.
-    //public bool IHaveAKey; //have i picked up a key
     private PushBlockSettings m_PushBlockSettings;
     private Rigidbody m_AgentRb;
     private DungeonEscapeEnvController m_GameController;
 
     public int health;
+    public int stabCoolTime = 100;
 
     public SpearAgent sp;
     public ShieldAgent sh;
@@ -24,23 +25,20 @@ public class MagicianAgent: Agent
         m_GameController = GetComponentInParent<DungeonEscapeEnvController>();
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
-        // MyKey.SetActive(false);
         healParticles.SetActive(false);
-        // IHaveAKey = false;
-        health = 50;
-
+        SkillOn = Wand.transform.GetChild(4).gameObject;
     }
 
     public override void OnEpisodeBegin()
     {
-        //MyKey.SetActive(false);
-        //IHaveAKey = false;
-
+        SkillOn.SetActive(false);
+        health = 50;
+        stabCoolTime = 100;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(0);
+        sensor.AddObservation(stabCoolTime == 0);
         sensor.AddObservation(sp.health);
         sensor.AddObservation(sh.health);
         sensor.AddObservation(mg.health);
@@ -54,31 +52,37 @@ public class MagicianAgent: Agent
     
     void CheckForHeal() {
 
-        Debug.Log("Heal!");
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
-        foreach(Collider c in colliders) {
-            if (c.GetComponent<SpearAgent>()) {
-                StartCoroutine(HealEffect());
-                SpearAgent Agent = c.GetComponent<SpearAgent>();
-                Agent.health = Agent.health > 50 ? 50 : Agent.health + 1;
-                Debug.Log(Agent.health);
-            }
+        // Debug.Log("Heal!");
+        if (stabCoolTime == 0) 
+        { 
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
+            foreach(Collider c in colliders) {
+                if (c.GetComponent<SpearAgent>()) {
+                    StartCoroutine(HealEffect());
+                    SpearAgent Agent = c.GetComponent<SpearAgent>();
+                    Agent.health = Agent.health > 50 ? 50 : Agent.health + 10;
+                    // Debug.Log(Agent.health);
+                }
 
-            else if (c.GetComponent<ShieldAgent>())
-            {
-                StartCoroutine(HealEffect());
-                ShieldAgent Agent = c.GetComponent<ShieldAgent>();
-                Agent.health = Agent.health > 50 ? 50 : Agent.health + 1;
-                Debug.Log(Agent.health);
+                else if (c.GetComponent<ShieldAgent>())
+                {
+                    StartCoroutine(HealEffect());
+                    ShieldAgent Agent = c.GetComponent<ShieldAgent>();
+                    Agent.health = Agent.health > 50 ? 50 : Agent.health + 10;
+                    // Debug.Log(Agent.health);
+                }
             }
+            stabCoolTime = 100;
+            SkillOn.SetActive(false);
         }
     }
-    public void onDamage()
+    public void onDamage(int damage)
     {
-        health -= 1;
+        health -= damage;
+        m_GameController.HitbyDragon();
         if (health <= 0)
         {
-            m_GameController.KilledByBaddie(this);
+            m_GameController.KilledByDragon(this);
         }
     }
 
@@ -87,6 +91,11 @@ public class MagicianAgent: Agent
     /// </summary>
     public void MoveAgent(ActionSegment<int> act)
     {
+        stabCoolTime = stabCoolTime <= 0 ? 0 : stabCoolTime - 1;
+        if (stabCoolTime == 0)
+        {
+            SkillOn.SetActive(true);
+        }
         var dirToGo = Vector3.zero;
         var rotateDir = Vector3.zero;
 
@@ -134,38 +143,17 @@ public class MagicianAgent: Agent
     {
         if (col.transform.CompareTag("dragon"))
         {
-            Debug.Log(health);
-            onDamage();
+            //Debug.Log(health);
+            onDamage(1);
         }
     }
 
     void OnCollisionEnter(Collision col)
     {
-
-        if (col.transform.CompareTag("lock"))
-        {
-            /*
-            if (IHaveAKey)
-            {
-                MyKey.SetActive(false);
-                IHaveAKey = false;
-                m_GameController.UnlockDoor();
-            }
-            */
-
-        }
     }
 
     void OnTriggerEnter(Collider col)
     {
-        //if we find a key and it's parent is the main platform we can pick it up
-        if (col.transform.CompareTag("key") && col.transform.parent == transform.parent && gameObject.activeInHierarchy)
-        {
-            print("Picked up key");
-            // MyKey.SetActive(true);
-            // IHaveAKey = true;
-            col.gameObject.SetActive(false);
-        }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)

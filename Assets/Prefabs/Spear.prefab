@@ -460,7 +460,7 @@ GameObject:
   - component: {fileID: 384255809670394760}
   - component: {fileID: 4429810861280370132}
   m_Layer: 0
-  m_Name: StabOn
+  m_Name: SkillOn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -224,6 +224,8 @@ MonoBehaviour:
   - spearAgent
   - shieldAgent
   - magicianAgent
+  - shield
+  - weapon
   m_RaysPerDirection: 7
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 0.05
@@ -1108,7 +1110,6 @@ GameObject:
   - component: {fileID: 7698183427313306147}
   - component: {fileID: 7371367613557678465}
   - component: {fileID: 3218865052566903911}
-  - component: {fileID: 1703668305100300346}
   - component: {fileID: 5880550880827134790}
   m_Layer: 0
   m_Name: Dragon
@@ -1223,49 +1224,6 @@ MonoBehaviour:
   m_UseChildSensors: 1
   m_UseChildActuators: 1
   m_ObservableAttributeHandling: 0
---- !u!114 &1703668305100300346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7371367613557678468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72a2c872185b0db49a4c0215ba7ef625, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tagToDetect: portal
-  onTriggerEnterEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStayEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExitEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionEnterEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DungeonEscapeEnvController, Assembly-CSharp
-        m_MethodName: BaddieTouchedBlock
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onCollisionStayEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onCollisionExitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5880550880827134790
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class fireball : MonoBehaviour
     public float duration;
     public SpearAgent spearagent;
     public ShieldAgent shieldagent;
+    private DungeonEscapeEnvController m_GameController;
 
     private List<string> tagList = new List<string>()
     {
@@ -30,20 +31,20 @@ public class fireball : MonoBehaviour
         if (other.GetComponent<SpearAgent>())
         {
             SpearAgent Agent = other.GetComponent<SpearAgent>();
-            Agent.onDamage();
+            Agent.onDamage(1);
             //Debug.Log(Agent.health);
         }
 
         if (other.GetComponent<MagicianAgent>())
         {
             MagicianAgent Agent = other.GetComponent<MagicianAgent>();
-            Agent.onDamage();
+            Agent.onDamage(1);
             //Debug.Log(Agent.health);
         }
         if (other.GetComponent<ShieldAgent>())
         {
             ShieldAgent Agent = other.GetComponent<ShieldAgent>();
-            Agent.onDamage();
+            Agent.onDamage(1);
             //Debug.Log(Agent.health);
         }
     }
@@ -57,7 +58,7 @@ public class fireball : MonoBehaviour
     void Update()
     {
         duration += Time.deltaTime;
-        Debug.Log(duration);
+        // Debug.Log(duration);
         if (duration > 1.0f)
             Destroy(this.gameObject);
 
