@@ -14,7 +14,7 @@ public class MagicianAgent: Agent
     private DungeonEscapeEnvController m_GameController;
 
     public int health;
-    public int stabCoolTime = 100;
+    public int skillCoolTime = 100;
 
     public SpearAgent sp;
     public ShieldAgent sh;
@@ -33,12 +33,12 @@ public class MagicianAgent: Agent
     {
         SkillOn.SetActive(false);
         health = 50;
-        stabCoolTime = 100;
+        skillCoolTime = 100;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(stabCoolTime == 0);
+        sensor.AddObservation(skillCoolTime == 0);
         sensor.AddObservation(sp.health);
         sensor.AddObservation(sh.health);
         sensor.AddObservation(mg.health);
@@ -53,7 +53,7 @@ public class MagicianAgent: Agent
     void CheckForHeal() {
 
         // Debug.Log("Heal!");
-        if (stabCoolTime == 0) 
+        if (skillCoolTime == 0) 
         { 
             Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
             foreach(Collider c in colliders) {
@@ -72,7 +72,7 @@ public class MagicianAgent: Agent
                     // Debug.Log(Agent.health);
                 }
             }
-            stabCoolTime = 100;
+            skillCoolTime = 100;
             SkillOn.SetActive(false);
         }
     }
@@ -91,8 +91,8 @@ public class MagicianAgent: Agent
     /// </summary>
     public void MoveAgent(ActionSegment<int> act)
     {
-        stabCoolTime = stabCoolTime <= 0 ? 0 : stabCoolTime - 1;
-        if (stabCoolTime == 0)
+        skillCoolTime = skillCoolTime <= 0 ? 0 : skillCoolTime - 1;
+        if (skillCoolTime == 0)
         {
             SkillOn.SetActive(true);
         }

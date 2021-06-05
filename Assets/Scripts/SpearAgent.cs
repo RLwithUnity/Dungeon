@@ -12,7 +12,7 @@ public class SpearAgent : Agent, IEntity
     private Rigidbody m_AgentRb;
     private DungeonEscapeEnvController m_GameController;
     
-    public int stabCoolTime = 100;
+    public int skillCoolTime = 100;
     public int health = 50;
 
     public SpearAgent sp;
@@ -25,19 +25,18 @@ public class SpearAgent : Agent, IEntity
         m_AgentRb = GetComponent<Rigidbody>();
         m_PushBlockSettings = FindObjectOfType<PushBlockSettings>();
         SkillOn = Spear.transform.GetChild(7).gameObject;
-
     }
 
     public override void OnEpisodeBegin()
     {
         SkillOn.SetActive(false);
         health = 50;
-        stabCoolTime = 100;
+        skillCoolTime = 100;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(stabCoolTime == 0);
+        sensor.AddObservation(skillCoolTime == 0);
         sensor.AddObservation(sp.health);
         sensor.AddObservation(sh.health);
         sensor.AddObservation(mg.health);
@@ -45,7 +44,7 @@ public class SpearAgent : Agent, IEntity
 
     public void agentAction()
     {
-        if (stabCoolTime == 0)
+        if (skillCoolTime == 0)
         {
             //Debug.Log("Stab!");
             // 창내리기
@@ -64,7 +63,7 @@ public class SpearAgent : Agent, IEntity
         Vector3 stab = this.transform.forward * 2f;
         m_AgentRb.AddForce(stab * m_PushBlockSettings.agentRunSpeed, ForceMode.VelocityChange);
 
-        stabCoolTime = 100;
+        skillCoolTime = 100;
         SkillOn.SetActive(false);
         Invoke("SpearUp", 1);
     }
@@ -90,8 +89,8 @@ public class SpearAgent : Agent, IEntity
     /// </summary>
     public void MoveAgent(ActionSegment<int> act)
     {
-        stabCoolTime = stabCoolTime <= 0 ? 0 : stabCoolTime-1;
-        if (stabCoolTime==0)
+        skillCoolTime = skillCoolTime <= 0 ? 0 : skillCoolTime - 1;
+        if (skillCoolTime == 0)
         {
             SkillOn.SetActive(true);
         }
